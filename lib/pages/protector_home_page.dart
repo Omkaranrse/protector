@@ -1,3 +1,5 @@
+// lib/pages/protector_home_page.dart
+
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
@@ -14,7 +16,6 @@ class ProtectorHomePage extends StatefulWidget {
 
 class _ProtectorHomePageState extends State<ProtectorHomePage> {
   late VideoPlayerController _controller;
-  int _selectedIndex = 0;
 
   @override
   void initState() {
@@ -32,12 +33,6 @@ class _ProtectorHomePageState extends State<ProtectorHomePage> {
   void dispose() {
     _controller.dispose();
     super.dispose();
-  }
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
   }
 
   @override
@@ -213,28 +208,6 @@ class _ProtectorHomePageState extends State<ProtectorHomePage> {
             ),
           ),
         ],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.black,
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.grey,
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shield),
-            label: 'Protector',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_today),
-            label: 'Bookings',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Account',
-          ),
-        ],
-        type: BottomNavigationBarType.fixed,
       ),
     );
   }

@@ -23,4 +23,8 @@ flutter:
 
   assets:
     - assets/background.mp4
+    - assets/videos/business_casual.mp4
+    - assets/videos/business_formal.mp4
+    - assets/videos/operator.mp4
+    - assets/videos/tactical_casual.mp4
     - assets/images/
