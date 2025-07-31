@@ -1,8 +1,7 @@
-// lib/main.dart
-
 import 'package:flutter/material.dart';
 import 'pages/protector_home_page.dart';
-import 'pages/booking_screen.dart'; // Create this screen
+import 'pages/booking_screen.dart';
+import 'pages/AccountScreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -39,7 +38,7 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
   final List<Widget> _screens = [
     const ProtectorHomePage(),
     const BookingScreen(),
-    const Center(child: Text('Account', style: TextStyle(color: Colors.white))),
+    const AccountScreen(), // REPLACED with AccountScreen
   ];
 
   void _onItemTapped(int index) {

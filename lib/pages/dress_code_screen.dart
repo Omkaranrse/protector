@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
+import 'motorcade_screen.dart';
 
 class DressCodeScreen extends StatefulWidget {
   const DressCodeScreen({super.key});
@@ -153,8 +154,13 @@ class _DressCodeScreenState extends State<DressCodeScreen> {
                 height: 50,
                 child: ElevatedButton(
                   onPressed: () {
-                    print('Selected Dress Code: ${dressCodes[selectedIndex]}');
+                    // print('Selected Dress Code: ${dressCodes[selectedIndex]}');
                     // Navigate to next screen or perform action
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const MotorcadeScreen()),
+                    );
+
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,
