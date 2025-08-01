@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'pickup_location_screen.dart';
+import 'booking_summary_screen.dart';
 
 class PickupDetailsScreen extends StatefulWidget {
   const PickupDetailsScreen({super.key});
@@ -146,7 +147,23 @@ class _PickupDetailsScreenState extends State<PickupDetailsScreen> {
               height: 55,
               child: ElevatedButton(
                 onPressed: () {
-                  // Navigate to next screen or action
+                  // Example values, replace with actual selections from previous screens
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => BookingSummaryScreen(
+                        protectees: 1, // TODO: fetch from user selection
+                        protectors: 1, // TODO: fetch from user selection
+                        dressCode: 'Business Casual', // TODO: fetch from user selection
+                        cars: 1, // TODO: fetch from user selection
+                        pickupLocation: 'Select Location', // TODO: fetch from user selection
+                        pickupDate: pickupDate,
+                        pickupTime: pickupTime,
+                        protectionDuration: protectionDuration,
+                        isMember: false, // TODO: fetch from user selection
+                      ),
+                    ),
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.white,

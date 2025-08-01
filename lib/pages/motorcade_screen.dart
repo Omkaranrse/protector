@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:video_player/video_player.dart';
 import 'pickup_details_screen.dart';
 
 class MotorcadeScreen extends StatefulWidget {
@@ -10,7 +11,18 @@ class MotorcadeScreen extends StatefulWidget {
 
 class _MotorcadeScreenState extends State<MotorcadeScreen> {
   int _carCount = 1;
+  // No video controller needed for GIF
 
+  @override
+  void initState() {
+    super.initState();
+    // No initialization needed for GIF
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
   void _incrementCar() {
     setState(() {
       _carCount++;
@@ -45,11 +57,11 @@ class _MotorcadeScreenState extends State<MotorcadeScreen> {
 
             const SizedBox(height: 10),
 
-            // Car Image
+            // Car GIF
             Expanded(
               child: Center(
                 child: Image.asset(
-                  'assets/images/escalade.png', // Replace with your actual image path
+                  'assets/videos/Car_Video_With_Rotating_Wheels.gif',
                   fit: BoxFit.contain,
                 ),
               ),

@@ -154,13 +154,13 @@ class _DressCodeScreenState extends State<DressCodeScreen> {
                 height: 50,
                 child: ElevatedButton(
                   onPressed: () {
-                    // print('Selected Dress Code: ${dressCodes[selectedIndex]}');
-                    // Navigate to next screen or perform action
+                    // TODO: Replace dummy data with actual booking details from previous screens
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const MotorcadeScreen()),
+                      MaterialPageRoute(
+                        builder: (context) => MotorcadeScreen(),
+                      ),
                     );
-
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,

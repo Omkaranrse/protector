@@ -7,8 +7,9 @@ class Assets {
   static const String assetsVideosBusinessFormal = 'assets/videos/business_formal.mp4';
   static const String assetsVideosOperator = 'assets/videos/operator.mp4';
   static const String assetsVideosTacticalCasual = 'assets/videos/tactical_casual.mp4';
+  static const String assetsVideoscar = 'assets/ideos/ar_Video_With_Rotating_Wheels.mp4';
   static const String imagesProtectorImage = 'assets/images/protector_image.png';
-  static const String imagesScreenshot 20250731 at 9.50.18 PM = 'assets/images/escalade.png';
+  static const String imagesScreenshot = 'assets/images/escalade.png';
   static const String protectorAssetsBackground = 'assets/background.mp4';
   static const String videosBusinessCasual = 'assets/videos/business_casual.mp4';
   static const String videosBusinessFormal = 'assets/videos/business_formal.mp4';
