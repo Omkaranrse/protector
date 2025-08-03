@@ -107,7 +107,12 @@ class _BookingScreenState extends State<BookingScreen> {
                   // ✅ Navigate to DressCodeScreen
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (_) => const DressCodeScreen()),
+                    MaterialPageRoute(
+                      builder: (_) => DressCodeScreen(
+                        protectees: _protectees,
+                        protectors: _protectors,
+                      ),
+                    ),
                   );
                 },
                 style: ElevatedButton.styleFrom(

@@ -1,9 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
+
 import 'pickup_details_screen.dart';
 
 class MotorcadeScreen extends StatefulWidget {
-  const MotorcadeScreen({super.key});
+  final int protectees;
+  final int protectors;
+  final String dressCode;
+  final String pickupLocation;
+
+  const MotorcadeScreen({
+    Key? key,
+    required this.protectees,
+    required this.protectors,
+    required this.dressCode,
+    required this.pickupLocation,
+  }) : super(key: key);
 
   @override
   State<MotorcadeScreen> createState() => _MotorcadeScreenState();
@@ -11,6 +23,7 @@ class MotorcadeScreen extends StatefulWidget {
 
 class _MotorcadeScreenState extends State<MotorcadeScreen> {
   int _carCount = 1;
+  String _pickupLocation = '';
   // No video controller needed for GIF
 
   @override
@@ -149,10 +162,18 @@ class _MotorcadeScreenState extends State<MotorcadeScreen> {
                 child: ElevatedButton(
                   onPressed: () {
                     // Handle "Next"
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const PickupDetailsScreen()),
-                    );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PickupDetailsScreen(
+                        protectees: widget.protectees,
+                        protectors: widget.protectors,
+                        dressCode: widget.dressCode,
+                        cars: _carCount,
+                        pickupLocation: _pickupLocation,
+                      ),
+                    ),
+                  );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,

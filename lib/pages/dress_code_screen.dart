@@ -4,8 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 import 'motorcade_screen.dart';
 
+
 class DressCodeScreen extends StatefulWidget {
-  const DressCodeScreen({super.key});
+  final int protectees;
+  final int protectors;
+
+  const DressCodeScreen({
+    Key? key,
+    required this.protectees,
+    required this.protectors,
+  }) : super(key: key);
 
   @override
   State<DressCodeScreen> createState() => _DressCodeScreenState();
@@ -155,12 +163,17 @@ class _DressCodeScreenState extends State<DressCodeScreen> {
                 child: ElevatedButton(
                   onPressed: () {
                     // TODO: Replace dummy data with actual booking details from previous screens
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => MotorcadeScreen(),
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MotorcadeScreen(
+                        protectees: widget.protectees,
+                        protectors: widget.protectors,
+                        dressCode: dressCodes[selectedIndex],
+                        pickupLocation: '',
                       ),
-                    );
+                    ),
+                  );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,

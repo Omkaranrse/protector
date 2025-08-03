@@ -1,18 +1,47 @@
 import 'package:flutter/material.dart';
 import 'pickup_location_screen.dart';
+import 'AccountScreen.dart';
 import 'booking_summary_screen.dart';
 
+
 class PickupDetailsScreen extends StatefulWidget {
-  const PickupDetailsScreen({super.key});
+  final int protectees;
+  final int protectors;
+  final String dressCode;
+  final int cars;
+  final String pickupLocation;
+  const PickupDetailsScreen({
+    super.key,
+    required this.protectees,
+    required this.protectors,
+    required this.dressCode,
+    required this.cars,
+    required this.pickupLocation,
+  });
 
   @override
   State<PickupDetailsScreen> createState() => _PickupDetailsScreenState();
 }
 
 class _PickupDetailsScreenState extends State<PickupDetailsScreen> {
+  // Simulate login state (replace with real auth logic or provider)
+  bool _isLoggedIn = false;
+
+  void _onLoginSuccess() {
+    setState(() {
+      _isLoggedIn = true;
+    });
+  }
   DateTime pickupDate = DateTime.now();
   TimeOfDay pickupTime = const TimeOfDay(hour: 12, minute: 0);
   Duration protectionDuration = const Duration(hours: 5);
+  late String selectedLocation;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedLocation = widget.pickupLocation;
+  }
 
   Future<void> _selectDate() async {
     DateTime? picked = await showDatePicker(
@@ -76,9 +105,9 @@ class _PickupDetailsScreenState extends State<PickupDetailsScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: ListView(
           children: [
+            const SizedBox(height: 24),
             const Text(
               "Where should we have your motorcade meet you?",
               style: TextStyle(
@@ -87,83 +116,100 @@ class _PickupDetailsScreenState extends State<PickupDetailsScreen> {
                   color: Colors.white),
             ),
             const SizedBox(height: 20),
-
             // Pickup Location
             _buildDetailTile(
               icon: Icons.location_on,
               title: 'Pickup Location',
-              subtitle: 'Select Location',
+              subtitle: selectedLocation.isEmpty ? 'Select Location' : selectedLocation,
               onTap: () async {
                 final result = await Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const PickupLocationScreen()),
                 );
-                if (result != null) {
+                if (result != null && result is String) {
                   setState(() {
-                    // Save or display selected location from `result`
+                    selectedLocation = result;
                   });
                 }
               },
-
             ),
-
             const SizedBox(height: 12),
-
             // Pickup Date
             _buildDetailTile(
               icon: Icons.calendar_today,
               title: 'Pickup Date',
               subtitle: _formattedDate(pickupDate),
-              onTap: _selectDate,
+              onTap: _selectDate
             ),
-
             const SizedBox(height: 12),
-
             // Pickup Time
             _buildDetailTile(
               icon: Icons.access_time,
               title: 'Pickup Time',
               subtitle: _formatTime(pickupTime),
-              onTap: _selectTime,
+              onTap: _selectTime
             ),
-
             const SizedBox(height: 12),
-
             // Duration
             _buildDetailTile(
               icon: Icons.timer,
               title: 'Duration of Protection',
               subtitle:
-              '${protectionDuration.inHours} hours · ${_formatTime(pickupTime)} — ${_formatTime(endTime)}',
+                  '${protectionDuration.inHours} hours · ${_formatTime(pickupTime)} — ${_formatTime(endTime)}',
               onTap: () {
                 // TODO: Add duration picker if needed
-              },
+              }
             ),
-
-            const Spacer(),
-
+            const SizedBox(height: 24),
             SizedBox(
               width: double.infinity,
               height: 55,
               child: ElevatedButton(
-                onPressed: () {
-                  // Example values, replace with actual selections from previous screens
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => BookingSummaryScreen(
-                        protectees: 1, // TODO: fetch from user selection
-                        protectors: 1, // TODO: fetch from user selection
-                        dressCode: 'Business Casual', // TODO: fetch from user selection
-                        cars: 1, // TODO: fetch from user selection
-                        pickupLocation: 'Select Location', // TODO: fetch from user selection
-                        pickupDate: pickupDate,
-                        pickupTime: pickupTime,
-                        protectionDuration: protectionDuration,
-                        isMember: false, // TODO: fetch from user selection
+                onPressed: () async {
+                  if (_isLoggedIn) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => BookingSummaryScreen(
+                          protectees: widget.protectees,
+                          protectors: widget.protectors,
+                          dressCode: widget.dressCode,
+                          cars: widget.cars,
+                          pickupLocation: selectedLocation,
+                          pickupDate: pickupDate,
+                          pickupTime: pickupTime,
+                          protectionDuration: protectionDuration,
+                          isMember: true,
+                        ),
                       ),
-                    ),
-                  );
+                    );
+                  } else {
+                    // Show login screen, then continue if successful
+                    final result = await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AccountScreen(onLoginSuccess: _onLoginSuccess),
+                      ),
+                    );
+                    if (result == true || _isLoggedIn) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => BookingSummaryScreen(
+                            protectees: widget.protectees,
+                            protectors: widget.protectors,
+                            dressCode: widget.dressCode,
+                            cars: widget.cars,
+                            pickupLocation: selectedLocation,
+                            pickupDate: pickupDate,
+                            pickupTime: pickupTime,
+                            protectionDuration: protectionDuration,
+                            isMember: true,
+                          ),
+                        ),
+                      );
+                    }
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.white,
@@ -172,14 +218,13 @@ class _PickupDetailsScreenState extends State<PickupDetailsScreen> {
                     borderRadius: BorderRadius.circular(30),
                   ),
                   textStyle: const TextStyle(
-                      fontSize: 16, fontWeight: FontWeight.bold),
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-                child: const Text("Next"),
-              ),
-            ),
-
-            const SizedBox(height: 20),
-          ],
+                child: const Text('Next')
+              )
+            )
+          ]
         ),
       ),
     );

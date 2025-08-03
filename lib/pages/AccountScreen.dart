@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'phone_number_screen.dart';
 
+
 class AccountScreen extends StatelessWidget {
-  const AccountScreen({super.key});
+  final VoidCallback? onLoginSuccess;
+  const AccountScreen({super.key, this.onLoginSuccess});
 
   @override
   Widget build(BuildContext context) {
@@ -50,11 +52,16 @@ class AccountScreen extends StatelessWidget {
                       width: double.infinity,
                       height: 48,
                       child: ElevatedButton.icon(
-                        onPressed: () {
-                          Navigator.push(
+                        onPressed: () async {
+                          // Navigate to phone number screen and wait for login
+                          final result = await Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => const PhoneNumberScreen()),
                           );
+                          if (result == true && onLoginSuccess != null) {
+                            onLoginSuccess!();
+                            Navigator.pop(context, true); // Return to previous screen
+                          }
                         },
 
                         style: ElevatedButton.styleFrom(

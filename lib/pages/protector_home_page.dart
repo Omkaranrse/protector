@@ -1,4 +1,4 @@
-import 'dart:io';
+// import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:video_player/video_player.dart';
@@ -7,6 +7,7 @@ import '../widgets/feature_card.dart';
 import '../widgets/protector_card.dart';
 import '../widgets/learn_more_card.dart';
 import 'booking_screen.dart';
+
 
 class ProtectorHomePage extends StatefulWidget {
   const ProtectorHomePage({super.key});
@@ -53,6 +54,9 @@ class _ProtectorHomePageState extends State<ProtectorHomePage>
       }
     }
   }
+
+  // Simulate login state (replace with real auth logic)
+
 
   @override
   Widget build(BuildContext context) {
