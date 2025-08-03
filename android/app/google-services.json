@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "48084947163",
+    "project_id": "body-guard-33cef",
+    "storage_bucket": "body-guard-33cef.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:48084947163:android:416eda8072c8281ba9fcfe",
+        "android_client_info": {
+          "package_name": "com.example.protector"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNieWc-Zxkjl5wca7yUPGXChiYJ3dywGs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

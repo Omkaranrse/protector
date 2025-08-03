@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:protector/providers/auth_provider.dart';
+import 'package:protector/services/notification_service.dart';
+import 'package:protector/widgets/loading_indicator.dart';
 import 'pickup_location_screen.dart';
 import 'AccountScreen.dart';
 import 'booking_summary_screen.dart';
@@ -24,13 +28,12 @@ class PickupDetailsScreen extends StatefulWidget {
 }
 
 class _PickupDetailsScreenState extends State<PickupDetailsScreen> {
-  // Simulate login state (replace with real auth logic or provider)
-  bool _isLoggedIn = false;
-
+  bool _isLoading = false;
+  
   void _onLoginSuccess() {
-    setState(() {
-      _isLoggedIn = true;
-    });
+    // This method is kept for backward compatibility with AccountScreen
+    // but we'll use AuthProvider for actual login state
+    setState(() {});
   }
   DateTime pickupDate = DateTime.now();
   TimeOfDay pickupTime = const TimeOfDay(hour: 12, minute: 0);
@@ -93,105 +96,94 @@ class _PickupDetailsScreenState extends State<PickupDetailsScreen> {
     final endHour = pickupTime.hour + protectionDuration.inHours;
     final endTime = TimeOfDay(hour: endHour % 24, minute: pickupTime.minute);
 
-    return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: AppBar(
+    final authProvider = Provider.of<AuthProvider>(context);
+    
+    return LoadingOverlay(
+      isLoading: _isLoading,
+      child: Scaffold(
         backgroundColor: Colors.black,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
+        appBar: AppBar(
+          backgroundColor: Colors.black,
+          elevation: 0,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () => Navigator.pop(context),
+          ),
         ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0),
-        child: ListView(
-          children: [
-            const SizedBox(height: 24),
-            const Text(
-              "Where should we have your motorcade meet you?",
-              style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white),
-            ),
-            const SizedBox(height: 20),
-            // Pickup Location
-            _buildDetailTile(
-              icon: Icons.location_on,
-              title: 'Pickup Location',
-              subtitle: selectedLocation.isEmpty ? 'Select Location' : selectedLocation,
-              onTap: () async {
-                final result = await Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const PickupLocationScreen()),
-                );
-                if (result != null && result is String) {
-                  setState(() {
-                    selectedLocation = result;
-                  });
-                }
-              },
-            ),
-            const SizedBox(height: 12),
-            // Pickup Date
-            _buildDetailTile(
-              icon: Icons.calendar_today,
-              title: 'Pickup Date',
-              subtitle: _formattedDate(pickupDate),
-              onTap: _selectDate
-            ),
-            const SizedBox(height: 12),
-            // Pickup Time
-            _buildDetailTile(
-              icon: Icons.access_time,
-              title: 'Pickup Time',
-              subtitle: _formatTime(pickupTime),
-              onTap: _selectTime
-            ),
-            const SizedBox(height: 12),
-            // Duration
-            _buildDetailTile(
-              icon: Icons.timer,
-              title: 'Duration of Protection',
-              subtitle:
-                  '${protectionDuration.inHours} hours · ${_formatTime(pickupTime)} — ${_formatTime(endTime)}',
-              onTap: () {
-                // TODO: Add duration picker if needed
-              }
-            ),
-            const SizedBox(height: 24),
-            SizedBox(
-              width: double.infinity,
-              height: 55,
-              child: ElevatedButton(
-                onPressed: () async {
-                  if (_isLoggedIn) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => BookingSummaryScreen(
-                          protectees: widget.protectees,
-                          protectors: widget.protectors,
-                          dressCode: widget.dressCode,
-                          cars: widget.cars,
-                          pickupLocation: selectedLocation,
-                          pickupDate: pickupDate,
-                          pickupTime: pickupTime,
-                          protectionDuration: protectionDuration,
-                          isMember: true,
-                        ),
-                      ),
-                    );
-                  } else {
-                    // Show login screen, then continue if successful
-                    final result = await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => AccountScreen(onLoginSuccess: _onLoginSuccess),
-                      ),
-                    );
-                    if (result == true || _isLoggedIn) {
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+          child: ListView(
+            children: [
+              const SizedBox(height: 24),
+              const Text(
+                "Where should we have your motorcade meet you?",
+                style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
+              ),
+              const SizedBox(height: 20),
+              // Pickup Location
+              _buildDetailTile(
+                icon: Icons.location_on,
+                title: 'Pickup Location',
+                subtitle: selectedLocation.isEmpty ? 'Select Location' : selectedLocation,
+                onTap: () async {
+                  final result = await Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const PickupLocationScreen()),
+                  );
+                  if (result != null && result is String) {
+                    setState(() {
+                      selectedLocation = result;
+                    });
+                  }
+                },
+              ),
+              const SizedBox(height: 12),
+              // Pickup Date
+              _buildDetailTile(
+                icon: Icons.calendar_today,
+                title: 'Pickup Date',
+                subtitle: _formattedDate(pickupDate),
+                onTap: _selectDate,
+              ),
+              const SizedBox(height: 12),
+              // Pickup Time
+              _buildDetailTile(
+                icon: Icons.access_time,
+                title: 'Pickup Time',
+                subtitle: _formatTime(pickupTime),
+                onTap: _selectTime,
+              ),
+              const SizedBox(height: 12),
+              // Duration
+              _buildDetailTile(
+                icon: Icons.timer,
+                title: 'Duration of Protection',
+                subtitle:
+                    '${protectionDuration.inHours} hours · ${_formatTime(pickupTime)} — ${_formatTime(endTime)}',
+                onTap: () {
+                  // TODO: Add duration picker if needed
+                },
+              ),
+              const SizedBox(height: 24),
+              SizedBox(
+                width: double.infinity,
+                height: 55,
+                child: ElevatedButton(
+                  onPressed: () async {
+                    final notificationService = Provider.of<NotificationService>(context, listen: false);
+                    
+                    if (selectedLocation.isEmpty) {
+                      notificationService.showNotification(
+                        'Please select a pickup location',
+                        NotificationType.warning,
+                      );
+                      return;
+                    }
+                    
+                    if (authProvider.isAuthenticated) {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -204,27 +196,68 @@ class _PickupDetailsScreenState extends State<PickupDetailsScreen> {
                             pickupDate: pickupDate,
                             pickupTime: pickupTime,
                             protectionDuration: protectionDuration,
-                            isMember: true,
+                            isMember: false,
                           ),
                         ),
                       );
+                    } else {
+                      // Show login screen, then continue if successful
+                      setState(() {
+                        _isLoading = true;
+                      });
+                      
+                      try {
+                        final result = await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => AccountScreen(onLoginSuccess: _onLoginSuccess),
+                          ),
+                        );
+                        
+                        if (!mounted) return;
+                        
+                        if (result == true || authProvider.isAuthenticated) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => BookingSummaryScreen(
+                                protectees: widget.protectees,
+                                protectors: widget.protectors,
+                                dressCode: widget.dressCode,
+                                cars: widget.cars,
+                                pickupLocation: selectedLocation,
+                                pickupDate: pickupDate,
+                                pickupTime: pickupTime,
+                                protectionDuration: protectionDuration,
+                                isMember: false,
+                              ),
+                            ),
+                          );
+                        }
+                      } finally {
+                        if (mounted) {
+                          setState(() {
+                            _isLoading = false;
+                          });
+                        }
+                      }
                     }
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  foregroundColor: Colors.black,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    foregroundColor: Colors.black,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    textStyle: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                  textStyle: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
+                  child: const Text('Next'),
                 ),
-                child: const Text('Next')
-              )
-            )
-          ]
+              ),
+            ],
+          ),
         ),
       ),
     );
