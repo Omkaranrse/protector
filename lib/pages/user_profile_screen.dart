@@ -7,7 +7,7 @@ import 'package:protector/utils/validators.dart';
 import 'package:protector/widgets/loading_indicator.dart';
 
 class UserProfileScreen extends StatefulWidget {
-  const UserProfileScreen({Key? key}) : super(key: key);
+  const UserProfileScreen({super.key});
 
   @override
   State<UserProfileScreen> createState() => _UserProfileScreenState();

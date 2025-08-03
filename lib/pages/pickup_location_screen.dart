@@ -4,7 +4,7 @@ import 'package:protector/services/notification_service.dart';
 import 'package:protector/widgets/loading_indicator.dart';
 
 class PickupLocationScreen extends StatefulWidget {
-  const PickupLocationScreen({Key? key}) : super(key: key);
+  const PickupLocationScreen({super.key});
 
   @override
   State<PickupLocationScreen> createState() => _PickupLocationScreenState();

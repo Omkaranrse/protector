@@ -8,7 +8,7 @@ import 'package:protector/widgets/loading_indicator.dart';
 class OtpVerifyScreen extends StatefulWidget {
   final String phoneNumber;
   
-  const OtpVerifyScreen({Key? key, required this.phoneNumber}) : super(key: key);
+  const OtpVerifyScreen({super.key, required this.phoneNumber});
 
   @override
   State<OtpVerifyScreen> createState() => _OtpVerifyScreenState();

@@ -21,7 +21,7 @@ class BookingSummaryScreen extends StatefulWidget {
   final bool isMember;
 
   const BookingSummaryScreen({
-    Key? key,
+    super.key,
     required this.protectees,
     required this.protectors,
     required this.dressCode,
@@ -31,7 +31,7 @@ class BookingSummaryScreen extends StatefulWidget {
     required this.pickupTime,
     required this.protectionDuration,
     required this.isMember,
-  }) : super(key: key);
+  });
 
   @override
   State<BookingSummaryScreen> createState() => _BookingSummaryScreenState();

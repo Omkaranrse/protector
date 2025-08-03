@@ -10,10 +10,10 @@ class DressCodeScreen extends StatefulWidget {
   final int protectors;
 
   const DressCodeScreen({
-    Key? key,
+    super.key,
     required this.protectees,
     required this.protectors,
-  }) : super(key: key);
+  });
 
   @override
   State<DressCodeScreen> createState() => _DressCodeScreenState();

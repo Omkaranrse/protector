@@ -9,7 +9,7 @@ import 'package:protector/widgets/booking_card.dart';
 import 'package:protector/widgets/loading_indicator.dart';
 
 class BookingHistoryScreen extends StatefulWidget {
-  const BookingHistoryScreen({Key? key}) : super(key: key);
+  const BookingHistoryScreen({super.key});
 
   @override
   State<BookingHistoryScreen> createState() => _BookingHistoryScreenState();

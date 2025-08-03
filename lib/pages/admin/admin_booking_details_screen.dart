@@ -9,7 +9,7 @@ import 'package:protector/widgets/loading_indicator.dart';
 class AdminBookingDetailsScreen extends StatefulWidget {
   final Booking booking;
 
-  const AdminBookingDetailsScreen({Key? key, required this.booking}) : super(key: key);
+  const AdminBookingDetailsScreen({super.key, required this.booking});
 
   @override
   State<AdminBookingDetailsScreen> createState() => _AdminBookingDetailsScreenState();

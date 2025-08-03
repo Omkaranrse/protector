@@ -10,12 +10,12 @@ class MotorcadeScreen extends StatefulWidget {
   final String pickupLocation;
 
   const MotorcadeScreen({
-    Key? key,
+    super.key,
     required this.protectees,
     required this.protectors,
     required this.dressCode,
     required this.pickupLocation,
-  }) : super(key: key);
+  });
 
   @override
   State<MotorcadeScreen> createState() => _MotorcadeScreenState();
@@ -23,7 +23,7 @@ class MotorcadeScreen extends StatefulWidget {
 
 class _MotorcadeScreenState extends State<MotorcadeScreen> {
   int _carCount = 1;
-  String _pickupLocation = '';
+  final String _pickupLocation = '';
   // No video controller needed for GIF
 
   @override

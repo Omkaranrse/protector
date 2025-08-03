@@ -8,7 +8,7 @@ import 'package:protector/utils/validators.dart';
 import 'package:protector/widgets/loading_indicator.dart';
 
 class PhoneNumberScreen extends StatefulWidget {
-  const PhoneNumberScreen({Key? key}) : super(key: key);
+  const PhoneNumberScreen({super.key});
 
   @override
   State<PhoneNumberScreen> createState() => _PhoneNumberScreenState();
@@ -17,7 +17,7 @@ class PhoneNumberScreen extends StatefulWidget {
 class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
   final _formKey = GlobalKey<FormState>();
   final _phoneController = TextEditingController();
-  String _countryCode = '+91';
+  final String _countryCode = '+91';
   bool _isLoading = false;
   String? _errorMessage;
 

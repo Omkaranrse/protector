@@ -36,8 +36,8 @@ class Booking {
     this.status = BookingStatus.pending,
     DateTime? createdAt,
   }) : 
-    this.id = id ?? const Uuid().v4(),
-    this.createdAt = createdAt ?? DateTime.now();
+    id = id ?? const Uuid().v4(),
+    createdAt = createdAt ?? DateTime.now();
 
   factory Booking.fromJson(Map<String, dynamic> json) {
     return Booking(

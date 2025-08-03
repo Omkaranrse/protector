@@ -8,7 +8,7 @@ import 'package:protector/utils/validators.dart';
 import 'package:protector/widgets/loading_indicator.dart';
 
 class AdminLoginScreen extends StatefulWidget {
-  const AdminLoginScreen({Key? key}) : super(key: key);
+  const AdminLoginScreen({super.key});
 
   @override
   State<AdminLoginScreen> createState() => _AdminLoginScreenState();

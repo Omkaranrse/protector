@@ -11,7 +11,7 @@ import 'package:protector/utils/page_transitions.dart';
 
 class AccountScreen extends StatefulWidget {
   final VoidCallback? onLoginSuccess;
-  const AccountScreen({Key? key, this.onLoginSuccess}) : super(key: key);
+  const AccountScreen({super.key, this.onLoginSuccess});
 
   @override
   State<AccountScreen> createState() => _AccountScreenState();

@@ -9,7 +9,7 @@ import 'package:protector/widgets/loading_indicator.dart';
 class BookingConfirmationScreen extends StatefulWidget {
   final String bookingId;
 
-  const BookingConfirmationScreen({Key? key, required this.bookingId}) : super(key: key);
+  const BookingConfirmationScreen({super.key, required this.bookingId});
 
   @override
   State<BookingConfirmationScreen> createState() => _BookingConfirmationScreenState();

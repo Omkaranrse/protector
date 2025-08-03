@@ -9,13 +9,13 @@ class BookingCard extends StatelessWidget {
   final Function(BookingStatus)? onStatusChange;
 
   const BookingCard({
-    Key? key,
+    super.key,
     required this.booking,
     this.onTap,
     this.onCancel,
     this.isAdmin = false,
     this.onStatusChange,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
