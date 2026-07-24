@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:video_player/video_player.dart';
 
 import 'pickup_details_screen.dart';
 
@@ -36,6 +35,7 @@ class _MotorcadeScreenState extends State<MotorcadeScreen> {
   void dispose() {
     super.dispose();
   }
+
   void _incrementCar() {
     setState(() {
       _carCount++;
@@ -85,10 +85,7 @@ class _MotorcadeScreenState extends State<MotorcadeScreen> {
             // Info Text
             const Text(
               'Escalade or Similar Vehicle • Fits 5 Protectees',
-              style: TextStyle(
-                color: Colors.white60,
-                fontSize: 14,
-              ),
+              style: TextStyle(color: Colors.white60, fontSize: 14),
             ),
 
             const SizedBox(height: 12),
@@ -111,10 +108,7 @@ class _MotorcadeScreenState extends State<MotorcadeScreen> {
               padding: EdgeInsets.symmetric(horizontal: 24.0),
               child: Text(
                 'Each car comes with a dedicated driver for the duration of your protection. Based on your booking detail, you will require 1 car.',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.white70,
-                ),
+                style: TextStyle(fontSize: 14, color: Colors.white70),
               ),
             ),
 
@@ -162,18 +156,18 @@ class _MotorcadeScreenState extends State<MotorcadeScreen> {
                 child: ElevatedButton(
                   onPressed: () {
                     // Handle "Next"
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => PickupDetailsScreen(
-                        protectees: widget.protectees,
-                        protectors: widget.protectors,
-                        dressCode: widget.dressCode,
-                        cars: _carCount,
-                        pickupLocation: _pickupLocation,
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => PickupDetailsScreen(
+                          protectees: widget.protectees,
+                          protectors: widget.protectors,
+                          dressCode: widget.dressCode,
+                          cars: _carCount,
+                          pickupLocation: _pickupLocation,
+                        ),
                       ),
-                    ),
-                  );
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,
@@ -181,9 +175,7 @@ class _MotorcadeScreenState extends State<MotorcadeScreen> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
-                    textStyle: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
+                    textStyle: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                   child: const Text('Next'),
                 ),

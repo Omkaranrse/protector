@@ -1,16 +1,45 @@
-# protector
+# Protector
 
-A new Flutter project.
+Protector is a Flutter mobile app for booking and managing personal protection services. It guides users through selecting protection details, dress code, pickup information, and booking confirmation.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+- User phone number and OTP verification flow
+- Booking flow for protectees, protectors, dress code, and pickup details
+- Motorcade and vehicle selection experience
+- Booking history and booking confirmation screens
+- Admin dashboard for overseeing bookings
 
-A few resources to get you started if this is your first Flutter project:
+## Prerequisites
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- Flutter SDK 3.8.1 or newer
+- An iOS or Android emulator/device
+- Xcode for iOS development on macOS
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Getting started
+
+1. Install dependencies:
+   ```bash
+   flutter pub get
+   ```
+2. Run the app:
+   ```bash
+   flutter run
+   ```
+3. For a specific platform:
+   ```bash
+   flutter run -d ios
+   flutter run -d android
+   ```
+
+## Project structure
+
+- lib/pages: app screens and flows
+- lib/services: API and service layer helpers
+- lib/models: booking and user data models
+- lib/providers: state management for booking and user data
+
+## Notes
+
+- The app currently uses mock service responses for booking and authentication flows.
+- Assets are bundled from the assets directory and referenced in the Flutter project configuration.

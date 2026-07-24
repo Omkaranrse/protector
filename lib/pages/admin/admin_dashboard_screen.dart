@@ -32,9 +32,14 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
 
     try {
       final authProvider = Provider.of<AuthProvider>(context, listen: false);
-      final bookingProvider = Provider.of<BookingProvider>(context, listen: false);
+      final bookingProvider = Provider.of<BookingProvider>(
+        context,
+        listen: false,
+      );
 
-      if (authProvider.token == null || authProvider.user == null || !authProvider.user!.isAdmin) {
+      if (authProvider.token == null ||
+          authProvider.user == null ||
+          !authProvider.user!.isAdmin) {
         setState(() {
           _isLoading = false;
           _errorMessage = 'You need admin privileges to access this page';
@@ -54,20 +59,28 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
   }
 
   void _viewBookingDetails(Booking booking) {
-    Navigator.of(context).push(
-      PageTransitions.slideRightTransition(
-        AdminBookingDetailsScreen(booking: booking),
-      ),
-    ).then((_) => _loadAllBookings()); // Refresh on return
+    Navigator.of(context)
+        .push(
+          PageTransitions.slideRightTransition(
+            AdminBookingDetailsScreen(booking: booking),
+          ),
+        )
+        .then((_) => _loadAllBookings()); // Refresh on return
   }
 
   void _logout() {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
-    final notificationService = Provider.of<NotificationService>(context, listen: false);
-    
+    final notificationService = Provider.of<NotificationService>(
+      context,
+      listen: false,
+    );
+
     authProvider.logout();
-    notificationService.showNotification('You have been logged out successfully', NotificationType.success);
-    
+    notificationService.showNotification(
+      'You have been logged out successfully',
+      NotificationType.success,
+    );
+
     Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
   }
 
@@ -77,17 +90,17 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
       if (_statusFilter != null && booking.status != _statusFilter) {
         return false;
       }
-      
+
       // Apply search query if not empty
       if (_searchQuery.isNotEmpty) {
         final query = _searchQuery.toLowerCase();
         return booking.id.toLowerCase().contains(query) ||
-               booking.pickupLocation.toLowerCase().contains(query) ||
-               booking.formattedDate.toLowerCase().contains(query) ||
-               booking.formattedTime.toLowerCase().contains(query) ||
-               booking.status.name.toLowerCase().contains(query);
+            booking.pickupLocation.toLowerCase().contains(query) ||
+            booking.formattedDate.toLowerCase().contains(query) ||
+            booking.formattedTime.toLowerCase().contains(query) ||
+            booking.status.name.toLowerCase().contains(query);
       }
-      
+
       return true;
     }).toList();
   }
@@ -122,11 +135,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(
-              Icons.error_outline,
-              color: Colors.red,
-              size: 48,
-            ),
+            const Icon(Icons.error_outline, color: Colors.red, size: 48),
             const SizedBox(height: 16),
             Text(
               _errorMessage!,
@@ -148,9 +157,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
     return Column(
       children: [
         _buildFilterBar(),
-        Expanded(
-          child: _buildBookingsList(),
-        ),
+        Expanded(child: _buildBookingsList()),
         _buildBookingStats(),
       ],
     );
@@ -197,7 +204,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
 
   Widget _buildFilterChip(String label, BookingStatus? status) {
     final isSelected = _statusFilter == status;
-    
+
     return FilterChip(
       label: Text(label),
       selected: isSelected,
@@ -215,18 +222,16 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
   Widget _buildBookingsList() {
     return Consumer<BookingProvider>(
       builder: (context, bookingProvider, _) {
-        final filteredBookings = _getFilteredBookings(bookingProvider.allBookings);
+        final filteredBookings = _getFilteredBookings(
+          bookingProvider.allBookings,
+        );
 
         if (filteredBookings.isEmpty) {
           return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
-                  Icons.calendar_today,
-                  size: 64,
-                  color: Colors.grey[400],
-                ),
+                Icon(Icons.calendar_today, size: 64, color: Colors.grey[400]),
                 const SizedBox(height: 16),
                 Text(
                   _statusFilter != null || _searchQuery.isNotEmpty
@@ -234,7 +239,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                       : 'No bookings available',
                   style: const TextStyle(fontSize: 16),
                 ),
-                if (_statusFilter != null || _searchQuery.isNotEmpty) ...[  
+                if (_statusFilter != null || _searchQuery.isNotEmpty) ...[
                   const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: () {
@@ -312,15 +317,12 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                 '${booking.cars} ${booking.cars == 1 ? 'car' : 'cars'}',
               ),
               const SizedBox(height: 8),
-              _buildInfoRow(
-                Icons.attach_money,
-                booking.formattedPrice,
-              ),
+              _buildInfoRow(Icons.attach_money, booking.formattedPrice),
               const SizedBox(height: 16),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  if (booking.status == BookingStatus.pending) ...[  
+                  if (booking.status == BookingStatus.pending) ...[
                     OutlinedButton(
                       onPressed: () => _viewBookingDetails(booking),
                       style: OutlinedButton.styleFrom(
@@ -333,7 +335,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                       onPressed: () => _viewBookingDetails(booking),
                       child: const Text('Confirm'),
                     ),
-                  ] else ...[  
+                  ] else ...[
                     ElevatedButton(
                       onPressed: () => _viewBookingDetails(booking),
                       child: const Text('View Details'),
@@ -351,7 +353,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
   Widget _buildStatusChip(BookingStatus status) {
     Color chipColor;
     Color textColor = Colors.white;
-    
+
     switch (status) {
       case BookingStatus.pending:
         chipColor = Colors.orange;
@@ -366,7 +368,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
         chipColor = Colors.red;
         break;
     }
-    
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
@@ -390,8 +392,6 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
         return 'Completed';
       case BookingStatus.cancelled:
         return 'Cancelled';
-      default:
-        return 'Unknown';
     }
   }
 
@@ -415,11 +415,19 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
     return Consumer<BookingProvider>(
       builder: (context, bookingProvider, _) {
         final allBookings = bookingProvider.allBookings;
-        final pendingCount = allBookings.where((b) => b.status == BookingStatus.pending).length;
-        final confirmedCount = allBookings.where((b) => b.status == BookingStatus.confirmed).length;
-        final completedCount = allBookings.where((b) => b.status == BookingStatus.completed).length;
-        final cancelledCount = allBookings.where((b) => b.status == BookingStatus.cancelled).length;
-        
+        final pendingCount = allBookings
+            .where((b) => b.status == BookingStatus.pending)
+            .length;
+        final confirmedCount = allBookings
+            .where((b) => b.status == BookingStatus.confirmed)
+            .length;
+        final completedCount = allBookings
+            .where((b) => b.status == BookingStatus.completed)
+            .length;
+        final cancelledCount = allBookings
+            .where((b) => b.status == BookingStatus.cancelled)
+            .length;
+
         return Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
@@ -457,13 +465,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
             color: color,
           ),
         ),
-        Text(
-          label,
-          style: TextStyle(
-            fontSize: 12,
-            color: Colors.grey[600],
-          ),
-        ),
+        Text(label, style: TextStyle(fontSize: 12, color: Colors.grey[600])),
       ],
     );
   }
